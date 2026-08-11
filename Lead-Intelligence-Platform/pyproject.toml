@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "lead-intelligence-platform"
+version = "0.0.1"
+description = "Enterprise Lead Intelligence Platform for Digital Marketing Agencies"
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [
+    { name = "Lead Intelligence Engineering Team" }
+]
+dependencies = [
+    "pydantic>=2.0.0",
+    "pydantic-settings>=2.0.0",
+    "httpx>=0.25.0",
+    "beautifulsoup4>=4.12.0",
+    "rich>=13.0.0"
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = "test_*.py"
