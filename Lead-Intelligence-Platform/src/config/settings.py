@@ -21,6 +21,17 @@ class DiscoverySettings(BaseSettings):
     )
 
 
+class ScrapingSettings(BaseSettings):
+    """Scraping and HTTP engine settings."""
+    timeout_seconds: float = Field(default=15.0, description="HTTP request timeout in seconds")
+    max_retries: int = Field(default=3, description="Maximum retry attempts for transient HTTP failures")
+    backoff_factor: float = Field(default=1.5, description="Exponential backoff multiplier")
+    user_agent: str = Field(
+        default="LeadIntelBot/1.0 (+https://leadintel.platform; lead-analysis)",
+        description="Default HTTP User-Agent header"
+    )
+
+
 class DatabaseSettings(BaseSettings):
     """Database storage settings."""
     sqlite_db_path: Path = Field(
@@ -44,6 +55,7 @@ class Settings(BaseSettings):
 
     discovery: DiscoverySettings = Field(default_factory=DiscoverySettings)
     database: DatabaseSettings = Field(default_factory=DatabaseSettings)
+    scraping: ScrapingSettings = Field(default_factory=ScrapingSettings)
 
 
 settings = Settings()
