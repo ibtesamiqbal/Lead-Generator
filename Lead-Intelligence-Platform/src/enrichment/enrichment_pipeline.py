@@ -30,7 +30,7 @@ from src.contact_discovery.discovery_engine import ContactDiscoveryEngine
 
 
 class EnrichmentPipeline:
-    """Orchestrates end-to-end website, technical, and contact intelligence enrichment."""
+    """Orchestrates end-to-end website, technical, contact, and decision maker intelligence enrichment."""
 
     def __init__(self, repository: CompanyRepository | None = None, fetcher: HTTPFetcher | None = None):
         self.repository = repository
@@ -55,6 +55,10 @@ class EnrichmentPipeline:
 
         # Phase 3 Contact Discovery Engine
         self.contact_discovery_engine = ContactDiscoveryEngine(fetcher=self.fetcher)
+
+        # Phase 4 Decision Maker Discovery Engine
+        from src.decision_maker.discovery import DecisionMakerDiscoveryEngine
+        self.decision_maker_engine = DecisionMakerDiscoveryEngine(fetcher=self.fetcher)
 
     async def enrich_domain(self, domain: str) -> CompanyEnrichmentReport:
         """
@@ -202,6 +206,45 @@ class EnrichmentPipeline:
             notes.append(f"Contact discovery error: {err}")
             contact_discovery_result = None
 
+        # --- Phase 4 Decision Maker Discovery Engine Execution ---
+        try:
+            c_emails = [e.address for e in contact_discovery_result.emails] if contact_discovery_result and hasattr(contact_discovery_result, "emails") else None
+            c_phones = [p.formatted_number for p in contact_discovery_result.phones] if contact_discovery_result and hasattr(contact_discovery_result, "phones") else None
+            sitemap_urls = sitemap.sitemap_urls if sitemap else None
+
+            decision_maker_result = await self.decision_maker_engine.discover(
+                domain=domain,
+                doc=doc,
+                source_url=fetch_result.url,
+                sitemap_urls=sitemap_urls,
+                contact_emails=c_emails,
+                contact_phones=c_phones
+            )
+        except Exception as err:
+            logger.error(f"Decision maker discovery error for '{domain}': {err}")
+            notes.append(f"Decision maker discovery error: {err}")
+            decision_maker_result = None
+
+        # Phase 5 Business Intelligence Engine Execution ---
+        try:
+            from src.business_intelligence.engine import BusinessIntelligenceEngine
+            bi_engine = BusinessIntelligenceEngine()
+            addrs = contact_discovery_result.addresses if contact_discovery_result and hasattr(contact_discovery_result, "addresses") else None
+            dms = decision_maker_result.decision_makers if decision_maker_result and hasattr(decision_maker_result, "decision_makers") else None
+
+            bi_result = await bi_engine.analyze(
+                domain=domain,
+                doc=doc,
+                metadata=metadata,
+                addresses=addrs,
+                decision_makers=dms,
+                source_url=fetch_result.url
+            )
+        except Exception as err:
+            logger.error(f"Business intelligence analysis error for '{domain}': {err}")
+            notes.append(f"Business intelligence error: {err}")
+            bi_result = None
+
         elapsed_sec = round(time.perf_counter() - start_time, 3)
 
         report = CompanyEnrichmentReport(
@@ -221,6 +264,8 @@ class EnrichmentPipeline:
             links=link_result,
             security=security_result,
             contact_discovery=contact_discovery_result,
+            decision_maker_discovery=decision_maker_result,
+            business_intelligence=bi_result,
             execution_time_seconds=elapsed_sec,
             is_successful=fetch_result.is_success,
             notes=notes

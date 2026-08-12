@@ -235,6 +235,12 @@ class CompanyEnrichmentReport(BaseModel):
     # Phase 3 Contact Discovery Addition
     contact_discovery: object | None = Field(default=None)
 
+    # Phase 4 Decision Maker Discovery Addition
+    decision_maker_discovery: object | None = Field(default=None)
+
+    # Phase 5 Business Intelligence Addition
+    business_intelligence: object | None = Field(default=None)
+
     execution_time_seconds: float = Field(default=0.0, description="Total pipeline processing duration")
     is_successful: bool = Field(default=True, description="True if enrichment completed cleanly")
     notes: list[str] = Field(default_factory=list, description="Warning or execution logs")

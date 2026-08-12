@@ -173,6 +173,64 @@ def cmd_enrich_domain(domain: str, verbose: bool = False):
         console.print(f"[bold yellow]Phones (E.164):[/bold yellow] {phone_str}")
         if cd.addresses:
             console.print(f"[bold yellow]Physical Address:[/bold yellow] {cd.addresses[0].raw_address}")
+    if hasattr(report, "decision_maker_discovery") and report.decision_maker_discovery:
+        dm_rep = report.decision_maker_discovery
+        console.print(f"\n[bold green]Decision Maker Discovery (Phase 04):[/bold green]")
+        console.print(f"  [cyan]Leadership Pages Discovered:[/cyan] {len(dm_rep.leadership_pages)}")
+        for page in dm_rep.leadership_pages[:3]:
+            console.print(f"    • [dim]{page.url} (Source: {page.source}, Confidence: {page.confidence * 100:.0f}%)[/dim]")
+        
+        console.print(f"  [cyan]Decision Makers Identified:[/cyan] {dm_rep.total_people_found}")
+        if dm_rep.decision_makers:
+            for dm in dm_rep.decision_makers:
+                console.print(
+                    f"    • [bold white]{dm.full_name}[/bold white] - [cyan]{dm.normalized_title}[/cyan] "
+                    f"([magenta]{dm.department.value}[/magenta] | Seniority: {dm.seniority.value}) "
+                    f"[yellow]Priority: {dm.priority}[/yellow] | [green]Confidence: {dm.confidence * 100:.0f}%[/green]"
+                )
+                contact_bits = []
+                if dm.email:
+                    contact_bits.append(f"Email: {dm.email}")
+                if dm.phone:
+                    contact_bits.append(f"Phone: {dm.phone}")
+                if dm.linkedin_url:
+                    contact_bits.append(f"LinkedIn: {dm.linkedin_url}")
+                if contact_bits:
+                    console.print(f"      [dim]{' | '.join(contact_bits)}[/dim]")
+        else:
+            console.print("    [dim]• No verified decision makers found on public leadership pages.[/dim]")
+
+    if hasattr(report, "business_intelligence") and report.business_intelligence:
+        bi = report.business_intelligence
+        console.print(f"\n[bold green]Business Intelligence (Phase 05):[/bold green]")
+        console.print(f"  • [cyan]Industry:[/cyan] [bold white]{bi.industry.value}[/bold white] (Confidence: {bi.industry_confidence * 100:.0f}%) | [cyan]Business Model:[/cyan] {bi.business_model.value}")
+        console.print(f"  • [cyan]Company Size:[/cyan] {bi.company_size_tier.value} | Est. Employees: [bold white]{bi.estimated_employee_range}[/bold white] (Confidence: {bi.company_size_confidence * 100:.0f}%)")
+        if bi.years_in_business:
+            console.print(f"  • [cyan]Years in Business:[/cyan] [bold white]{bi.years_in_business} years[/bold white] (Founded: {bi.founded_year})")
+        if bi.primary_services:
+            console.print(f"  • [cyan]Primary Services:[/cyan] {', '.join(bi.primary_services)}")
+        if bi.secondary_services:
+            console.print(f"  • [cyan]Secondary Services:[/cyan] {', '.join(bi.secondary_services)}")
+        if bi.geography and (bi.geography.primary_headquarters or bi.geography.service_areas):
+            hq = bi.geography.primary_headquarters or 'N/A'
+            areas = ', '.join(bi.geography.service_areas[:4]) or 'Local'
+            console.print(f"  • [cyan]Headquarters:[/cyan] {hq} | [cyan]Service Areas:[/cyan] {areas} (Offices: {bi.geography.office_locations_count})")
+        if bi.trust_signals:
+            ts = bi.trust_signals
+            trust_bits = []
+            if ts.has_testimonials: trust_bits.append("Testimonials")
+            if ts.has_case_studies: trust_bits.append("Case Studies")
+            if ts.has_portfolio: trust_bits.append("Portfolio")
+            if ts.has_financing: trust_bits.append("Financing Options")
+            if ts.has_warranty: trust_bits.append("Warranty Guarantees")
+            if ts.certifications: trust_bits.append(f"Certs: {', '.join(ts.certifications)}")
+            if ts.awards: trust_bits.append(f"Awards: {', '.join(ts.awards)}")
+            if trust_bits:
+                console.print(f"  • [cyan]Trust Signals:[/cyan] {', '.join(trust_bits)}")
+        if bi.hiring:
+            hiring_status = "Currently Hiring" if bi.hiring.currently_hiring else "No Active Hiring Signals"
+            careers_str = f" (Careers: {bi.hiring.careers_page_url})" if bi.hiring.careers_page_url else ""
+            console.print(f"  • [cyan]Hiring Status:[/cyan] {hiring_status}{careers_str}")
 
     if verbose:
         console.print("\n[bold magenta]--- Detailed Analyzer Findings & Warnings ---[/bold magenta]")
