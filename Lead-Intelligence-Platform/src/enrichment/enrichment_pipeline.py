@@ -265,7 +265,40 @@ class EnrichmentPipeline:
         except Exception as err:
             logger.error(f"Marketing intelligence analysis error for '{domain}': {err}")
             notes.append(f"Marketing intelligence error: {err}")
-            mkt_result = None
+        # Phase 7 AI Insights & Opportunity Engine Execution ---
+        try:
+            from src.ai_insights.engine import AIInsightsEngine
+            ai_engine = AIInsightsEngine()
+
+            # Construct partial report for Phase 7 analysis
+            partial_report = CompanyEnrichmentReport(
+                domain=domain,
+                fetch_result=fetch_result,
+                metadata=metadata,
+                contacts=contacts,
+                socials=socials,
+                cms=cms,
+                robots=robots,
+                sitemap=sitemap,
+                seo=seo_result,
+                structured_data=structured_data_result,
+                tech_stack=tech_stack_result,
+                performance=performance_result,
+                accessibility=accessibility_result,
+                links=link_result,
+                security=security_result,
+                contact_discovery=contact_discovery_result,
+                decision_maker_discovery=decision_maker_result,
+                business_intelligence=bi_result,
+                marketing_intelligence=mkt_result,
+                is_successful=fetch_result.is_success,
+            )
+
+            ai_result = await ai_engine.analyze(partial_report)
+        except Exception as err:
+            logger.error(f"AI Insights analysis error for '{domain}': {err}")
+            notes.append(f"AI Insights error: {err}")
+            ai_result = None
 
         elapsed_sec = round(time.perf_counter() - start_time, 3)
 
@@ -289,6 +322,7 @@ class EnrichmentPipeline:
             decision_maker_discovery=decision_maker_result,
             business_intelligence=bi_result,
             marketing_intelligence=mkt_result,
+            ai_insights=ai_result,
             execution_time_seconds=elapsed_sec,
             is_successful=fetch_result.is_success,
             notes=notes

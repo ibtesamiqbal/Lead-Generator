@@ -248,6 +248,23 @@ def cmd_enrich_domain(domain: str, verbose: bool = False):
         if mi.analytics_tech and mi.analytics_tech.detected_marketing_tools:
             console.print(f"  • [cyan]Marketing Tech Stack:[/cyan] {', '.join(mi.analytics_tech.detected_marketing_tools)}")
 
+    if hasattr(report, "ai_insights") and report.ai_insights:
+        ai = report.ai_insights
+        console.print(f"\n[bold magenta]AI Insights & Opportunity Analysis (Phase 07):[/bold magenta]")
+        console.print(f"  • [cyan]Executive Overview:[/cyan] {ai.executive_summary}")
+        console.print(f"  • [cyan]Overall Digital Maturity:[/cyan] [bold white]{ai.digital_maturity.level.value}[/bold white] (Score: [bold yellow]{ai.digital_maturity.score}/100[/bold yellow] | Confidence: {ai.confidence * 100:.0f}%)")
+        if ai.strengths:
+            console.print(f"  • [cyan]Top Strengths:[/cyan] {'; '.join(ai.strengths[:3])}")
+        if ai.weaknesses:
+            console.print(f"  • [cyan]Key Weaknesses:[/cyan] {'; '.join(ai.weaknesses[:3])}")
+        if ai.recommended_services:
+            recs_fmt = [f"{r.service_name} ({r.priority} Priority)" for r in ai.recommended_services[:3]]
+            console.print(f"  • [cyan]Recommended Services:[/cyan] {', '.join(recs_fmt)}")
+        if ai.outreach_strategy:
+            console.print(f"  • [cyan]Outreach Strategy:[/cyan] Target [bold white]{ai.outreach_strategy.primary_contact_target}[/bold white] | [italic]{ai.outreach_strategy.opening_angle}[/italic]")
+        if ai.risks:
+            console.print(f"  • [yellow]Risks & Caveats:[/yellow] {'; '.join(ai.risks[:2])}")
+
     if verbose:
         console.print("\n[bold magenta]--- Detailed Analyzer Findings & Warnings ---[/bold magenta]")
         for analyzer_obj in (report.seo, report.structured_data, report.tech_stack, report.performance, report.accessibility, report.links, report.security):
