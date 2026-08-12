@@ -232,6 +232,22 @@ def cmd_enrich_domain(domain: str, verbose: bool = False):
             careers_str = f" (Careers: {bi.hiring.careers_page_url})" if bi.hiring.careers_page_url else ""
             console.print(f"  • [cyan]Hiring Status:[/cyan] {hiring_status}{careers_str}")
 
+    if hasattr(report, "marketing_intelligence") and report.marketing_intelligence:
+        mi = report.marketing_intelligence
+        console.print(f"\n[bold green]Marketing Intelligence (Phase 06):[/bold green]")
+        console.print(f"  • [cyan]Marketing Maturity:[/cyan] [bold white]{mi.marketing_maturity.level.value}[/bold white] (Score: [bold yellow]{mi.overall_score}/100[/bold yellow] | Confidence: {mi.marketing_maturity.confidence * 100:.0f}%)")
+        console.print(f"  • [cyan]Primary CTA:[/cyan] [bold white]'{mi.cta.primary_cta}'[/bold white] (Found {mi.cta.total_ctas_found} CTAs)")
+        if mi.content.resources_detected:
+            console.print(f"  • [cyan]Content Assets:[/cyan] {', '.join(mi.content.resources_detected)} (Freshness: {mi.content.content_freshness_rating})")
+        if mi.social and mi.social.social_completeness_score > 0:
+            active_socials = [name for name, present in [("LinkedIn", mi.social.has_linkedin), ("Facebook", mi.social.has_facebook), ("Instagram", mi.social.has_instagram), ("YouTube", mi.social.has_youtube), ("X/Twitter", mi.social.has_twitter)] if present]
+            console.print(f"  • [cyan]Social Channels:[/cyan] {', '.join(active_socials) or 'None'} (Completeness: {mi.social.social_completeness_score:.0f}%)")
+        if mi.conversion:
+            conv_features = [f for f, p in [("Contact Form", mi.conversion.has_contact_form), ("Quote Request", mi.conversion.has_quote_request), ("Demo Request", mi.conversion.has_demo_request), ("Booking System", mi.conversion.has_booking_system), ("Live Chat", mi.conversion.has_live_chat), ("Newsletter", mi.conversion.has_newsletter_signup)] if p]
+            console.print(f"  • [cyan]Conversion Funnel:[/cyan] {', '.join(conv_features) or 'Basic Links'} (Score: {mi.conversion.conversion_score:.0f}/100)")
+        if mi.analytics_tech and mi.analytics_tech.detected_marketing_tools:
+            console.print(f"  • [cyan]Marketing Tech Stack:[/cyan] {', '.join(mi.analytics_tech.detected_marketing_tools)}")
+
     if verbose:
         console.print("\n[bold magenta]--- Detailed Analyzer Findings & Warnings ---[/bold magenta]")
         for analyzer_obj in (report.seo, report.structured_data, report.tech_stack, report.performance, report.accessibility, report.links, report.security):

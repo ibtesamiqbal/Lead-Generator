@@ -245,6 +245,28 @@ class EnrichmentPipeline:
             notes.append(f"Business intelligence error: {err}")
             bi_result = None
 
+        # Phase 6 Marketing Intelligence Engine Execution ---
+        try:
+            from src.marketing_intelligence.engine import MarketingIntelligenceEngine
+            mkt_engine = MarketingIntelligenceEngine()
+
+            mkt_result = await mkt_engine.analyze(
+                domain=domain,
+                doc=doc,
+                metadata=metadata,
+                socials=socials,
+                seo_result=seo_result,
+                structured_data=structured_data_result,
+                tech_stack_result=tech_stack_result,
+                robots=robots,
+                sitemap=sitemap,
+                source_url=fetch_result.url
+            )
+        except Exception as err:
+            logger.error(f"Marketing intelligence analysis error for '{domain}': {err}")
+            notes.append(f"Marketing intelligence error: {err}")
+            mkt_result = None
+
         elapsed_sec = round(time.perf_counter() - start_time, 3)
 
         report = CompanyEnrichmentReport(
@@ -266,6 +288,7 @@ class EnrichmentPipeline:
             contact_discovery=contact_discovery_result,
             decision_maker_discovery=decision_maker_result,
             business_intelligence=bi_result,
+            marketing_intelligence=mkt_result,
             execution_time_seconds=elapsed_sec,
             is_successful=fetch_result.is_success,
             notes=notes
