@@ -298,7 +298,40 @@ class EnrichmentPipeline:
         except Exception as err:
             logger.error(f"AI Insights analysis error for '{domain}': {err}")
             notes.append(f"AI Insights error: {err}")
-            ai_result = None
+        # Phase 8 Lead Scoring Engine Execution ---
+        try:
+            from src.lead_scoring.engine import LeadScoringEngine
+            scoring_engine = LeadScoringEngine()
+
+            partial_report_p8 = CompanyEnrichmentReport(
+                domain=domain,
+                fetch_result=fetch_result,
+                metadata=metadata,
+                contacts=contacts,
+                socials=socials,
+                cms=cms,
+                robots=robots,
+                sitemap=sitemap,
+                seo=seo_result,
+                structured_data=structured_data_result,
+                tech_stack=tech_stack_result,
+                performance=performance_result,
+                accessibility=accessibility_result,
+                links=link_result,
+                security=security_result,
+                contact_discovery=contact_discovery_result,
+                decision_maker_discovery=decision_maker_result,
+                business_intelligence=bi_result,
+                marketing_intelligence=mkt_result,
+                ai_insights=ai_result,
+                is_successful=fetch_result.is_success,
+            )
+
+            scoring_result = await scoring_engine.analyze(partial_report_p8)
+        except Exception as err:
+            logger.error(f"Lead Scoring analysis error for '{domain}': {err}")
+            notes.append(f"Lead Scoring error: {err}")
+            scoring_result = None
 
         elapsed_sec = round(time.perf_counter() - start_time, 3)
 
@@ -323,6 +356,7 @@ class EnrichmentPipeline:
             business_intelligence=bi_result,
             marketing_intelligence=mkt_result,
             ai_insights=ai_result,
+            lead_scoring=scoring_result,
             execution_time_seconds=elapsed_sec,
             is_successful=fetch_result.is_success,
             notes=notes

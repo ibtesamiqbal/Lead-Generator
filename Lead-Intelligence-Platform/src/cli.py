@@ -265,6 +265,22 @@ def cmd_enrich_domain(domain: str, verbose: bool = False):
         if ai.risks:
             console.print(f"  • [yellow]Risks & Caveats:[/yellow] {'; '.join(ai.risks[:2])}")
 
+    if hasattr(report, "lead_scoring") and report.lead_scoring:
+        ls = report.lead_scoring
+        p_color = "red" if ls.priority.value in ("HOT", "HIGH") else ("yellow" if ls.priority.value == "MEDIUM" else "white")
+        console.print(f"\n[bold yellow]Lead Scoring & Prioritization (Phase 08):[/bold yellow]")
+        console.print(f"  • [cyan]Overall Lead Score:[/cyan] [bold yellow]{ls.overall_score}/100[/bold yellow] | [cyan]Grade:[/cyan] [bold white]{ls.grade.value}[/bold white] | [cyan]Priority:[/cyan] [{p_color}][bold]{ls.priority.value}[/bold][/{p_color}] (Confidence: {ls.confidence * 100:.0f}%)")
+        console.print(f"  • [cyan]Sales Metrics:[/cyan] Potential: [bold white]{ls.purchase_potential.value}[/bold white] | Urgency: [bold white]{ls.sales_urgency.value}[/bold white] | Est. Value: [bold white]{ls.estimated_sales_value.value}[/bold white]")
+        console.print(f"  • [cyan]Target Role:[/cyan] [bold white]{ls.recommended_contact_role}[/bold white]")
+        if ls.recommended_service_bundle:
+            console.print(f"  • [cyan]Recommended Bundle:[/cyan] {', '.join(ls.recommended_service_bundle)}")
+        if ls.positive_signals:
+            console.print(f"  • [green]Positive Contributors:[/green] {'; '.join(ls.positive_signals[:3])}")
+        if ls.negative_signals:
+            console.print(f"  • [red]Negative Detractors:[/red] {'; '.join(ls.negative_signals[:3])}")
+        if ls.reason_codes:
+            console.print(f"  • [cyan]Reason Codes:[/cyan] [dim]{', '.join(ls.reason_codes)}[/dim]")
+
     if verbose:
         console.print("\n[bold magenta]--- Detailed Analyzer Findings & Warnings ---[/bold magenta]")
         for analyzer_obj in (report.seo, report.structured_data, report.tech_stack, report.performance, report.accessibility, report.links, report.security):

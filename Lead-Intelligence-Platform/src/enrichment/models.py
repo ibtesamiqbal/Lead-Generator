@@ -247,6 +247,9 @@ class CompanyEnrichmentReport(BaseModel):
     # Phase 7 AI Insights Addition
     ai_insights: object | None = Field(default=None)
 
+    # Phase 8 Lead Scoring Addition
+    lead_scoring: object | None = Field(default=None)
+
     execution_time_seconds: float = Field(default=0.0, description="Total pipeline processing duration")
     is_successful: bool = Field(default=True, description="True if enrichment completed cleanly")
     notes: list[str] = Field(default_factory=list, description="Warning or execution logs")
