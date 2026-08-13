@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "lead-intelligence-platform"
-version = "0.0.1"
+version = "0.3.0"
 description = "Enterprise Lead Intelligence Platform for Digital Marketing Agencies"
 readme = "README.md"
 requires-python = ">=3.11"
@@ -19,9 +19,14 @@ dependencies = [
     "rich>=13.0.0"
 ]
 
+[project.scripts]
+lead-intel = "src.cli:main"
+
 [tool.setuptools.packages.find]
-where = ["src"]
+where = ["."]
+include = ["src*"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 python_files = "test_*.py"
+

@@ -32,10 +32,13 @@ class ScrapingSettings(BaseSettings):
     )
 
 
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+
 class DatabaseSettings(BaseSettings):
     """Database storage settings."""
     sqlite_db_path: Path = Field(
-        default=Path("data/lead_intelligence.db"),
+        default_factory=lambda: BASE_DIR / "data" / "lead_intelligence.db",
         description="SQLite database storage filepath"
     )
 

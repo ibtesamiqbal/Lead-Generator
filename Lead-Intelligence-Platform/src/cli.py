@@ -9,6 +9,7 @@ from rich.console import Console
 from rich.table import Table
 from rich.panel import Panel
 
+from src import __version__ as VERSION
 from src.config.settings import settings
 from src.database.repository import SQLiteCompanyRepository
 from src.discovery.ingestion import IngestionService
@@ -16,7 +17,7 @@ from src.logging.logger import logger
 from src.utils.exceptions import LeadIntelException
 
 console = Console()
-VERSION = "0.1.0"
+
 
 
 def print_banner():

@@ -90,3 +90,16 @@ async def test_postgres_exporter():
     summary = await exporter.export(reports)
     assert summary.is_successful is True
     assert summary.format == ExportFormat.POSTGRES
+    assert summary.exported_records == 1
+
+
+@pytest.mark.anyio
+async def test_postgres_exporter_with_custom_uri():
+    exporter = PostgresExporter(connection_uri="postgresql://user:pass@invalid_host:5432/db")
+    reports = [CompanyEnrichmentReport(domain="testpg_custom.com", fetch_result=_dummy_fetch())]
+
+    summary = await exporter.export(reports)
+    assert summary.is_successful is True
+    assert summary.format == ExportFormat.POSTGRES
+    assert summary.exported_records == 1
+

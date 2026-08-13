@@ -5,7 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v0.3.0] - 2026-08-13
+
+### Fixed & Remediated (RC-1 Release Certification)
+- **PostgreSQL Exporter Implementation (`src.export.postgres_exporter`)**:
+  - Implemented full PostgreSQL DDL creation (`CREATE TABLE IF NOT EXISTS lead_records`), parameterized UPSERT execution (`INSERT INTO ... ON CONFLICT (domain) DO UPDATE`), resource closing in `finally` blocks, and graceful connection failure fallback.
+- **Version Synchronization**:
+  - Established `src.__init__.__version__ = "0.3.0"` as single source of truth. Synchronized `pyproject.toml` (`0.3.0`), `src.cli` (`v0.3.0`), and documentation.
+- **CLI Console Script Entrypoint**:
+  - Registered `lead-intel = "src.cli:main"` in `pyproject.toml` `[project.scripts]`.
+- **Ghost Package Clean-up**:
+  - Safely deleted unused empty stub directories (`src/analysis`, `src/crawler`, `src/extractors`, `src/parsers`). Verified zero import breakage.
+- **Documentation Drift**:
+  - Updated `PROJECT_STATUS.md` and `TODO.md` to reflect 100% completion across Phases 01 through 09.
+
 ## [v0.3.1] - 2026-08-11
+
 
 ### Fixed
 - **Issue 1 – HTML Title Extraction**:
