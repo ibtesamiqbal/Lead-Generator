@@ -127,7 +127,7 @@ def cmd_list_targets():
     console.print(table)
 
 
-def cmd_enrich_domain(domain: str, verbose: bool = False):
+def cmd_enrich_domain(domain: str, verbose: bool = False, export_format: str | None = None, output_path: str | None = None):
     """Enrich a target company domain with website intelligence."""
     import asyncio
     from src.enrichment.enrichment_pipeline import EnrichmentPipeline
@@ -291,6 +291,36 @@ def cmd_enrich_domain(domain: str, verbose: bool = False):
                 for w in analyzer_obj.warnings:
                     console.print(f"  [yellow][WARN] {w}[/yellow]")
 
+    if export_format:
+        from src.export import ExportEngine, ExportFormat
+        fmt_enum = ExportFormat(export_format.lower())
+        engine = ExportEngine()
+        summary = asyncio.run(engine.export_report(report, fmt=fmt_enum, destination=output_path))
+        console.print(f"\n[bold green]Export Completed ({summary.format.value.upper()}):[/bold green] [white]{summary.destination_path}[/white] (in {summary.duration_seconds}s)")
+
+
+def cmd_export_domain(domain: str, format: str = "json", output_path: str | None = None):
+    """Exports an existing enrichment report for target domain."""
+    import asyncio
+    from src.enrichment.enrichment_pipeline import EnrichmentPipeline
+    from src.export import ExportEngine, ExportFormat
+
+    print_banner()
+    repo = SQLiteCompanyRepository()
+    pipeline = EnrichmentPipeline(repository=repo)
+
+    company = repo.get_by_domain(domain)
+    if not company:
+        console.print(f"[bold red]Error:[/bold red] Domain '{domain}' is not registered.")
+        return
+
+    report = asyncio.run(pipeline.enrich_domain(domain))
+    fmt_enum = ExportFormat(format.lower())
+    engine = ExportEngine()
+    summary = asyncio.run(engine.export_report(report, fmt=fmt_enum, destination=output_path))
+
+    console.print(f"[bold green]Export Successful ({summary.format.value.upper()}):[/bold green] [white]{summary.destination_path}[/white] ({summary.exported_records} record exported)")
+
 
 def main():
     """Main CLI Entrypoint."""
@@ -319,6 +349,14 @@ def main():
     enrich_parser = subparsers.add_parser("enrich", help="Run website intelligence enrichment on a target domain")
     enrich_parser.add_argument("-d", "--domain", required=True, help="Target business domain to enrich")
     enrich_parser.add_argument("-v", "--verbose", action="store_true", help="Display detailed analyzer findings and warnings")
+    enrich_parser.add_argument("-e", "--export-format", choices=["json", "csv", "excel", "sqlite", "postgres"], help="Export format destination")
+    enrich_parser.add_argument("-o", "--output", help="Destination file path for export")
+
+    # export subcommand
+    export_parser = subparsers.add_parser("export", help="Export enrichment reports to CSV/JSON/Excel/Database")
+    export_parser.add_argument("-d", "--domain", required=True, help="Target business domain to export")
+    export_parser.add_argument("-f", "--format", choices=["json", "csv", "excel", "sqlite", "postgres"], default="json", help="Export format destination")
+    export_parser.add_argument("-o", "--output", help="Destination output file path")
 
     # config & version
     subparsers.add_parser("config", help="Display application configuration")
@@ -331,7 +369,9 @@ def main():
     elif args.command == "config":
         cmd_config()
     elif args.command == "enrich":
-        cmd_enrich_domain(args.domain, verbose=args.verbose)
+        cmd_enrich_domain(args.domain, verbose=args.verbose, export_format=args.export_format, output_path=args.output)
+    elif args.command == "export":
+        cmd_export_domain(args.domain, format=args.format, output_path=args.output)
     elif args.command == "discover":
         if args.discover_command == "ingest":
             cmd_ingest_domain(args.domain, args.name, args.industry, args.country)

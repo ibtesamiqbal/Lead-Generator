@@ -1,0 +1,535 @@
+[
+  {
+    "domain": "example.com",
+    "enriched_at": "2026-08-13T05:08:23.516436Z",
+    "fetch_result": {
+      "url": "https://example.com",
+      "status_code": 200,
+      "content": "<!doctype html><html lang=\"en\"><head><title>Example Domain</title><link rel=\"icon\" href=\"data:,\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><style>body{background:#eee;width:60vw;margin:15vh auto;font-family:system-ui,sans-serif}h1{font-size:1.5em}div{opacity:0.8}a:link,a:visited{color:#348}</style></head><body><div><h1>Example Domain</h1><p>This domain is for use in documentation examples without needing permission. Avoid use in operations.</p><p><a href=\"https://iana.org/domains/example\">Learn more</a></p></div></body></html>\n",
+      "headers": {
+        "date": "Thu, 13 Aug 2026 05:08:34 GMT",
+        "content-type": "text/html",
+        "transfer-encoding": "chunked",
+        "connection": "keep-alive",
+        "server": "cloudflare",
+        "last-modified": "Wed, 12 Aug 2026 20:17:18 GMT",
+        "allow": "GET, HEAD",
+        "age": "5552",
+        "cf-cache-status": "HIT",
+        "content-encoding": "gzip",
+        "cf-ray": "a2a533e59e4992f0-KHI"
+      },
+      "response_time_ms": 127.2,
+      "is_success": true,
+      "error": null
+    },
+    "metadata": {
+      "title": "Example Domain",
+      "meta_description": null,
+      "canonical_url": null,
+      "keywords": [],
+      "open_graph": {},
+      "twitter_card": {},
+      "h1_tags": [
+        "Example Domain"
+      ],
+      "h2_tags": [],
+      "language": "en",
+      "charset": null,
+      "favicon_url": "data:,",
+      "generator": null
+    },
+    "contacts": {
+      "emails": [],
+      "phone_numbers": [],
+      "contact_page_urls": [],
+      "physical_addresses": []
+    },
+    "socials": {
+      "facebook": null,
+      "instagram": null,
+      "linkedin": null,
+      "twitter_x": null,
+      "youtube": null,
+      "tiktok": null,
+      "pinterest": null
+    },
+    "cms": {
+      "cms_name": "Unknown",
+      "confidence": 0.0,
+      "evidence": []
+    },
+    "robots": {
+      "is_found": false,
+      "rules": [],
+      "sitemap_urls": [],
+      "raw_text": null
+    },
+    "sitemap": {
+      "is_found": false,
+      "sitemap_urls": [],
+      "url_count": 0
+    },
+    "seo": {
+      "analyzer_name": "SEOAnalyzer",
+      "analyzer_version": "1.0.0",
+      "execution_time_seconds": 0.0007,
+      "data": {
+        "title_length": 14,
+        "is_title_optimal": false,
+        "meta_description_length": 0,
+        "is_meta_description_optimal": false,
+        "has_meta_keywords": false,
+        "heading_structure_valid": true,
+        "h1_count": 1,
+        "h2_count": 0,
+        "canonical_url_valid": false,
+        "is_indexable": true,
+        "is_followable": true,
+        "open_graph_complete": false,
+        "twitter_card_complete": false,
+        "image_alt_coverage_ratio": 1.0,
+        "total_images": 0,
+        "missing_alt_images": 0,
+        "internal_links_count": 0,
+        "external_links_count": 1,
+        "has_duplicate_metadata": false
+      },
+      "findings": [
+        "Single H1 tag detected."
+      ],
+      "warnings": [
+        "Title length (14 chars) is outside optimal 30-60 char range.",
+        "Missing meta description tag.",
+        "Incomplete OpenGraph tags (missing og:title or og:image).",
+        "Missing rel='canonical' link tag."
+      ],
+      "errors": []
+    },
+    "structured_data": {
+      "analyzer_name": "StructuredDataAnalyzer",
+      "analyzer_version": "1.0.0",
+      "execution_time_seconds": 0.0001,
+      "data": {
+        "detected_formats": [],
+        "detected_schema_types": [],
+        "is_valid": false,
+        "item_count": 0
+      },
+      "findings": [],
+      "warnings": [
+        "No structured data (JSON-LD, Microdata, or RDFa) detected."
+      ],
+      "errors": []
+    },
+    "tech_stack": {
+      "analyzer_name": "ExpandedTechDetector",
+      "analyzer_version": "1.0.0",
+      "execution_time_seconds": 0.0011,
+      "data": {
+        "analytics": [],
+        "advertising": [],
+        "js_frameworks": [],
+        "css_frameworks": [],
+        "infrastructure": [
+          {
+            "name": "Cloudflare",
+            "category": "CDN / Infrastructure",
+            "confidence": 1.0,
+            "evidence": [
+              "cf-ray HTTP header"
+            ]
+          }
+        ],
+        "marketing_platforms": [],
+        "live_chat": [],
+        "cms": {
+          "cms_name": "Unknown",
+          "confidence": 0.0,
+          "evidence": []
+        }
+      },
+      "findings": [
+        "Detected CDN / Infrastructure: Cloudflare (Confidence: 1.0)"
+      ],
+      "warnings": [],
+      "errors": []
+    },
+    "performance": {
+      "analyzer_name": "PerformanceAnalyzer",
+      "analyzer_version": "1.0.0",
+      "execution_time_seconds": 0.0001,
+      "data": {
+        "response_time_ms": 127.2,
+        "redirect_chain": [
+          "https://example.com"
+        ],
+        "redirect_count": 0,
+        "http_version": "HTTP/1.1",
+        "page_size_bytes": 559,
+        "compression_supported": [
+          "gzip"
+        ],
+        "cache_control": null,
+        "expires": null,
+        "js_resource_count": 0,
+        "css_resource_count": 0,
+        "image_resource_count": 0,
+        "total_resource_count": 0
+      },
+      "findings": [
+        "Server response time: 127.2 ms.",
+        "Compression enabled: gzip."
+      ],
+      "warnings": [
+        "Missing 'Cache-Control' HTTP response header."
+      ],
+      "errors": []
+    },
+    "accessibility": {
+      "analyzer_name": "AccessibilityAnalyzer",
+      "analyzer_version": "1.0.0",
+      "execution_time_seconds": 0.0003,
+      "data": {
+        "missing_alt_count": 0,
+        "missing_form_labels_count": 0,
+        "missing_html_lang": false,
+        "heading_sequence_valid": true,
+        "unlabeled_iframes_count": 0,
+        "unlabeled_buttons_count": 0,
+        "generic_anchor_count": 1,
+        "accessibility_score": 98.0
+      },
+      "findings": [
+        "Excellent DOM accessibility posture (Score: 98.0/100)."
+      ],
+      "warnings": [
+        "1 link(s) use non-descriptive generic text (e.g. 'click here')."
+      ],
+      "errors": []
+    },
+    "links": {
+      "analyzer_name": "LinkAnalyzer",
+      "analyzer_version": "1.0.0",
+      "execution_time_seconds": 0.0001,
+      "data": {
+        "total_links": 1,
+        "internal_links": [],
+        "external_links": [
+          "https://iana.org/domains/example"
+        ],
+        "duplicate_links_count": 0,
+        "anchor_diversity_score": 1.0,
+        "candidate_broken_links": []
+      },
+      "findings": [
+        "Discovered 1 total hyperlinks (0 internal, 1 external)."
+      ],
+      "warnings": [],
+      "errors": []
+    },
+    "security": {
+      "analyzer_name": "PassiveSecurityAnalyzer",
+      "analyzer_version": "1.0.0",
+      "execution_time_seconds": 0.0,
+      "data": {
+        "has_strict_transport_security": false,
+        "hsts_value": null,
+        "has_content_security_policy": false,
+        "csp_value": null,
+        "has_x_frame_options": false,
+        "x_frame_options_value": null,
+        "has_x_content_type_options": false,
+        "has_referrer_policy": false,
+        "has_permissions_policy": false,
+        "security_score": 0.0
+      },
+      "findings": [],
+      "warnings": [
+        "Missing Strict-Transport-Security (HSTS) header.",
+        "Missing Content-Security-Policy (CSP) header.",
+        "Missing X-Frame-Options header.",
+        "Missing X-Content-Type-Options: nosniff header.",
+        "Missing Referrer-Policy header."
+      ],
+      "errors": []
+    },
+    "contact_discovery": {
+      "domain": "example.com",
+      "discovered_at": "2026-08-13T05:08:23.331587Z",
+      "emails": [],
+      "phones": [],
+      "addresses": [],
+      "operating_hours": null,
+      "contact_pages": [],
+      "social_validations": [],
+      "total_emails_found": 0,
+      "total_phones_found": 0,
+      "execution_time_seconds": 0.0003,
+      "is_successful": true,
+      "notes": []
+    },
+    "decision_maker_discovery": {
+      "domain": "example.com",
+      "discovered_at": "2026-08-13T05:08:23.342323Z",
+      "leadership_pages": [],
+      "decision_makers": [],
+      "total_people_found": 0,
+      "execution_time_seconds": 0.0093,
+      "is_successful": true,
+      "notes": []
+    },
+    "business_intelligence": {
+      "domain": "example.com",
+      "industry": "Other B2B",
+      "industry_confidence": 0.5,
+      "business_model": "B2B",
+      "company_size_tier": "Micro (1-10)",
+      "estimated_employee_range": "1-10",
+      "company_size_confidence": 0.6,
+      "founded_year": null,
+      "years_in_business": null,
+      "primary_services": [
+        "General Business Services"
+      ],
+      "secondary_services": [],
+      "geography": {
+        "primary_headquarters": null,
+        "service_areas": [],
+        "states_served": [],
+        "office_locations_count": 1
+      },
+      "trust_signals": {
+        "has_testimonials": false,
+        "has_reviews": false,
+        "has_case_studies": false,
+        "has_portfolio": false,
+        "has_financing": false,
+        "has_warranty": false,
+        "certifications": [],
+        "awards": []
+      },
+      "hiring": {
+        "currently_hiring": false,
+        "has_careers_page": false,
+        "careers_page_url": null,
+        "open_roles_detected": []
+      },
+      "is_successful": true,
+      "notes": []
+    },
+    "marketing_intelligence": {
+      "domain": "example.com",
+      "marketing_maturity": {
+        "level": "Basic",
+        "score": 21,
+        "confidence": 0.88
+      },
+      "seo_summary": {
+        "has_title_tag": true,
+        "title_quality": "Fair",
+        "has_meta_description": false,
+        "has_structured_data": false,
+        "has_canonical_tag": false,
+        "has_sitemap": false,
+        "has_robots_txt": false,
+        "heading_hierarchy_valid": true,
+        "image_alt_coverage_ratio": 1.0,
+        "internal_linking_rating": "Basic"
+      },
+      "content": {
+        "has_blog": false,
+        "blog_url": null,
+        "resources_detected": [
+          "Guides & Documentation"
+        ],
+        "has_case_studies": false,
+        "has_whitepapers": false,
+        "has_guides": true,
+        "has_video_content": false,
+        "has_faqs": false,
+        "content_freshness_rating": "Static Content"
+      },
+      "social": {
+        "has_facebook": false,
+        "facebook_url": null,
+        "has_linkedin": false,
+        "linkedin_url": null,
+        "has_instagram": false,
+        "instagram_url": null,
+        "has_twitter": false,
+        "twitter_url": null,
+        "has_youtube": false,
+        "youtube_url": null,
+        "has_tiktok": false,
+        "social_completeness_score": 0.0
+      },
+      "conversion": {
+        "has_contact_form": false,
+        "has_quote_request": false,
+        "has_demo_request": false,
+        "has_booking_system": false,
+        "has_newsletter_signup": false,
+        "has_live_chat": false,
+        "has_downloadable_assets": false,
+        "conversion_score": 0.0
+      },
+      "cta": {
+        "primary_cta": "Learn More",
+        "secondary_ctas": [],
+        "total_ctas_found": 1
+      },
+      "analytics_tech": {
+        "has_ga4": false,
+        "has_gtm": false,
+        "has_meta_pixel": false,
+        "has_linkedin_insight": false,
+        "has_hubspot": false,
+        "has_hotjar": false,
+        "has_clarity": false,
+        "detected_marketing_tools": [
+          "Cloudflare"
+        ]
+      },
+      "overall_score": 21,
+      "is_successful": true,
+      "notes": []
+    },
+    "ai_insights": {
+      "domain": "example.com",
+      "executive_summary": "example.com is an established Other B2B company operating as a Micro (1-10) (1-10 employees). The company currently exhibits basic digital maturity (score: 21/100) with public leadership contact details yet to be verified.",
+      "digital_maturity": {
+        "level": "Basic",
+        "score": 34,
+        "confidence": 0.9
+      },
+      "strengths": [
+        "Fast website response latency (127ms)"
+      ],
+      "weaknesses": [
+        "Missing Content Security Policy (CSP) header",
+        "No verified decision makers found on public leadership pages",
+        "Incomplete social media channel presence",
+        "No blog or content marketing section detected"
+      ],
+      "opportunities": {
+        "seo": [
+          "Expand internal cross-linking between service pages",
+          "Generate and submit an XML sitemap to Google Search Console"
+        ],
+        "marketing": [
+          "Publish regular educational blog articles to attract organic search traffic",
+          "Publish customer case studies and proof-of-work project stories",
+          "Claim and link missing social media profiles (LinkedIn, YouTube)"
+        ],
+        "conversion": [
+          "Add high-visibility 'Request a Free Quote' form to header/hero section",
+          "Implement live chat or AI chat agent for instant visitor lead capture",
+          "Integrate automated appointment scheduling (e.g. Calendly / HubSpot Meetings)"
+        ],
+        "sales": [
+          "Conduct targeted LinkedIn Sales Navigator research to find decision maker emails"
+        ]
+      },
+      "recommended_services": [
+        {
+          "service_name": "Conversion Rate Optimization (CRO)",
+          "priority": "High",
+          "rationale": "The website lacks instant quote forms or live chat widgets, limiting visitor lead capture efficiency.",
+          "supporting_signals": [
+            "Conversion Score < 60",
+            "Missing live chat / instant booking"
+          ]
+        },
+        {
+          "service_name": "Content Marketing & Blogging",
+          "priority": "Medium",
+          "rationale": "No active blog or resource center was detected, missing organic search traffic opportunities.",
+          "supporting_signals": [
+            "No active blog section detected"
+          ]
+        },
+        {
+          "service_name": "Marketing Automation & CRM Setup",
+          "priority": "Medium",
+          "rationale": "No advanced marketing automation platform (e.g. HubSpot) was detected to nurture inbound leads.",
+          "supporting_signals": [
+            "Missing HubSpot / Marketing Automation tag"
+          ]
+        },
+        {
+          "service_name": "Security & Compliance Hardening",
+          "priority": "Low",
+          "rationale": "Website is missing Content Security Policy (CSP) header protection against cross-site scripting.",
+          "supporting_signals": [
+            "Security Header Score < 100",
+            "Missing CSP header"
+          ]
+        }
+      ],
+      "outreach_strategy": {
+        "primary_contact_target": "Managing Director / CEO",
+        "suggested_tone": "Consultative & Value-Focused",
+        "opening_angle": "Help example.com capture 20-30% more online quote requests from existing website visitors.",
+        "talking_points": [
+          "Reference domain example.com digital posture findings.",
+          "Highlight specific conversion or SEO gap identified during audit.",
+          "Propose quick 15-minute introductory growth strategy session."
+        ]
+      },
+      "risks": [
+        "Estimated company employee size has medium/low confidence due to limited public team data.",
+        "No public leadership or management pages found; executive contact research required.",
+        "No direct public email addresses discovered on website DOM."
+      ],
+      "confidence": 0.95,
+      "is_successful": true,
+      "notes": []
+    },
+    "lead_scoring": {
+      "domain": "example.com",
+      "overall_score": 39,
+      "grade": "F",
+      "priority": "COLD",
+      "confidence": 0.45,
+      "purchase_potential": "Low",
+      "sales_urgency": "Low",
+      "estimated_sales_value": "Medium ($10k-$20k)",
+      "recommended_contact_role": "Managing Director / CEO",
+      "recommended_service_bundle": [
+        "Conversion Rate Optimization (CRO)",
+        "Content Marketing & Blogging",
+        "Marketing Automation & CRM Setup",
+        "Security & Compliance Hardening"
+      ],
+      "positive_signals": [
+        "Fast website response latency (127ms)"
+      ],
+      "negative_signals": [
+        "No verified decision makers found on public leadership pages",
+        "Missing Content Security Policy (CSP) header",
+        "Missing online lead form or quote request form"
+      ],
+      "reason_codes": [
+        "FAST_LATENCY",
+        "MISSING_CSP",
+        "NO_CONTACT_FORM",
+        "NO_EXEC_FOUND"
+      ],
+      "category_breakdown": {
+        "website_score": 69.4,
+        "contact_score": 0.0,
+        "decision_maker_score": 10.0,
+        "business_score": 40.0,
+        "marketing_score": 21.0,
+        "ai_opportunity_score": 72.0,
+        "confidence_adjustment": 5.0
+      },
+      "is_successful": true,
+      "notes": []
+    },
+    "execution_time_seconds": 2.829,
+    "is_successful": true,
+    "notes": []
+  }
+]
